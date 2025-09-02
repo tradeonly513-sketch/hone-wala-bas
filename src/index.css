@@ -1,0 +1,122 @@
+@import "tailwindcss";
+
+@font-face {
+    font-family: font1;
+    src: url(../public/fonts/Lausanne-300.woff2);
+}
+@font-face {
+    font-family: font2;
+    src: url(../public/fonts/Lausanne-500.woff2);
+}
+
+/* Smooth scrolling for the entire page */
+html {
+    scroll-behavior: smooth;
+    /* Prevent layout shift during loading */
+    overflow-y: scroll;
+}
+
+/* Ensure body allows scrolling */
+body {
+    overflow-x: hidden;
+    overflow-y: auto;
+    /* Prevent flash of unstyled content */
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+/* Loading state for body */
+body.loading {
+    opacity: 0;
+}
+
+/* Custom scrollbar styling */
+::-webkit-scrollbar {
+    width: 8px;
+}
+
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+::-webkit-scrollbar-thumb {
+    background: #D3FD50;
+    border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #b8e03e;
+}
+
+/* Parallax video background effect */
+.parallax-video {
+    will-change: transform;
+}
+
+/* Smooth transitions for interactive elements */
+.interactive-element {
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+/* Enhanced hover states */
+.enhanced-hover:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.15);
+}
+
+/* Smooth scroll behavior for navigation */
+html {
+    scroll-behavior: smooth;
+}
+
+/* Navigation styling */
+nav {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+/* Hide scrollbar for mobile navigation */
+.scrollbar-hide {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
+}
+
+.scrollbar-hide::-webkit-scrollbar {
+    display: none;
+}
+
+/* Prevent content jumping during animations */
+.gsap-animation {
+    will-change: transform, opacity;
+}
+
+/* Ensure videos load properly */
+iframe {
+    opacity: 1;
+    transition: opacity 0.3s ease-in-out;
+}
+
+iframe[src=""] {
+    opacity: 0;
+}
+
+/* Smooth transitions for all interactive elements */
+* {
+    box-sizing: border-box;
+}
+
+/* Prevent layout shifts */
+img, video, iframe {
+    max-width: 100%;
+    height: auto;
+}
+
+/* Enhanced focus states for accessibility */
+button:focus-visible,
+input:focus-visible,
+textarea:focus-visible,
+select:focus-visible {
+    outline: 2px solid #D3FD50;
+    outline-offset: 2px;
+}
