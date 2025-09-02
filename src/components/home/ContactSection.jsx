@@ -73,8 +73,7 @@ const ContactSection = () => {
             Get In Touch
           </h2>
           <p className="font-[font1] lg:text-xl text-lg lg:max-w-3xl max-w-xl mx-auto leading-relaxed text-gray-300">
-            Prêt à donner vie à votre vision? Contactez-nous pour discuter de
-            votre projet de mariage.
+          The first step to your perfect film is a simple hello. Reach out to us today :)
           </p>
         </div>
 
@@ -86,7 +85,7 @@ const ContactSection = () => {
                 Contact Details
               </h3>
               <div className="space-y-3 font-[font1] text-lg lg:text-xl text-gray-300">
-                <p>📧 contact@wedding92.com</p>
+                <p>📧 contact@amouraworks.com</p>
                 <p>📍 22 ruelle du Clerc, 59126, Linselles (France)</p>
                 <p>🕒 M–F: 9am – 7pm (UTC+1)</p>
               </div>
@@ -119,8 +118,7 @@ const ContactSection = () => {
                   Quick Response Guarantee
                 </h4>
                 <p className="font-[font1] text-base lg:text-lg text-gray-300 leading-relaxed">
-                  Nous nous engageons à répondre à toutes les demandes dans les
-                  24 heures. Votre projet mérite notre attention immédiate.
+                We respond to all inquiries within 24 hours. Your project deserves our immediate attention.
                 </p>
               </div>
             </div>

@@ -108,7 +108,7 @@ const TermsOfService = () => {
               </p>
               <div className='bg-gray-100 rounded-xl p-6 space-y-2'>
                 <p className='font-[font1] text-lg text-gray-700'>
-                  <strong>Email:</strong> legal@wedding92.com
+                  <strong>Email:</strong> legal@amouraworks.com
                 </p>
                 <p className='font-[font1] text-lg text-gray-700'>
                   <strong>Address:</strong> 22 ruelle du Clerc, 59126, Linselles (France)

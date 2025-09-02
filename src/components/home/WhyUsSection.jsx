@@ -113,7 +113,7 @@ const WhyUsSection = () => {
         {/* Section Header */}
         <div className="text-center mb-16">
           <h2 className="why-us-title font-[font2] lg:text-[8vw] text-6xl uppercase mb-8 leading-tight">
-            Why Us
+          Get to Know the Amoura Promise
           </h2>
           <p className="intro-text font-[font1] lg:text-xl text-lg lg:max-w-3xl max-w-xl mx-auto leading-relaxed text-gray-700">
             Creative • Reliable • Timely

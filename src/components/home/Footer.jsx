@@ -143,12 +143,12 @@ const Footer = () => {
             </h3>
             <div className='font-[font1] text-base lg:text-lg text-gray-300'>
               <a 
-                href="mailto:contact@wedding92.com"
+                href="mailto:contact@amouraworks.com"
                 target="_blank"
                 rel="noopener noreferrer"
                 className='hover:text-[#D3FD50] transition-colors duration-300 hover:underline'
               >
-                contact@wedding92.com
+                contact@amouraworks.com
               </a>
             </div>
           </div>
@@ -158,7 +158,7 @@ const Footer = () => {
         <div className='border-t border-gray-800 pt-8'>
           <div className='text-center'>
             <p className='font-[font1] text-sm lg:text-base text-gray-500'>
-              © 2025 K72 Wedding Videography. All rights reserved.
+              © 2025 Amoura Works. All rights reserved.
             </p>
           </div>
         </div>

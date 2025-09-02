@@ -21,7 +21,7 @@ const Contact = () => {
           Contact Us
         </h1>
         <p className='contact-content font-[font1] lg:text-xl text-lg lg:max-w-3xl max-w-xl mx-auto leading-relaxed text-gray-300 px-6'>
-          Prêt à transformer votre mariage en chef-d'œuvre cinématographique? Contactez-nous dès aujourd'hui.
+        The first step to your perfect film is a simple hello. Reach out to us today
         </p>
       </div>
 
@@ -41,8 +41,8 @@ const Contact = () => {
               <div className='space-y-4 font-[font1] text-lg lg:text-xl text-gray-300'>
                 <div className='flex items-center space-x-4'>
                   <span className='text-2xl'>📧</span>
-                  <a href="mailto:contact@wedding92.com" className='hover:text-[#D3FD50] transition-colors duration-300'>
-                    contact@wedding92.com
+                  <a href="mailto:contact@amouraworks.com" className='hover:text-[#D3FD50] transition-colors duration-300'>
+                    contact@amouraworks.com
                   </a>
                 </div>
                 <div className='flex items-center space-x-4'>

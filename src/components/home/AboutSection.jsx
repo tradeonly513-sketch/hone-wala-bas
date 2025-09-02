@@ -66,10 +66,10 @@ const AboutSection = () => {
                 Our Story
               </h3>
               <p className='font-[font1] text-lg lg:text-xl leading-relaxed text-gray-700'>
-                K72 est née de la passion de capturer l'essence des moments les plus précieux. Depuis 7 ans, nous transformons les mariages en œuvres cinématographiques qui racontent des histoires authentiques et émouvantes.
+                For 7 years, we’ve dedicated ourselves to transforming weddings into cinematic stories. With equal parts craft and heart, we create films that feel as real as the moments themselve, memories designed to last a lifetime.
               </p>
               <p className='font-[font1] text-lg lg:text-xl leading-relaxed text-gray-700'>
-                Notre approche unique combine expertise technique et sensibilité artistique pour créer des souvenirs qui traversent le temps et touchent les cœurs.
+              "Our approach is simple,  to be present, to listen, and to see your day as you live it. With equal parts skill and sensitivity, we create films that feel real, timeless, and true to you."
               </p>
             </div>
 
@@ -93,7 +93,7 @@ const AboutSection = () => {
                 Vision
               </h4>
               <p className='font-[font1] text-base lg:text-lg leading-relaxed text-gray-600'>
-                Créer des films de mariage qui transcendent le temps et capturent l'essence de l'amour.
+              We want every wedding film to feel like a piece of your story.  real, timeless, and full of love.
               </p>
             </div>
 
@@ -103,7 +103,7 @@ const AboutSection = () => {
                 Mission
               </h4>
               <p className='font-[font1] text-base lg:text-lg leading-relaxed text-gray-600'>
-                Offrir une expérience exceptionnelle et des souvenirs cinématographiques inoubliables.
+              Our goal is simple: to give you memories that feel alive, not staged. Films that make you feel the day all over again.
               </p>
             </div>
 
@@ -113,7 +113,7 @@ const AboutSection = () => {
                 Values
               </h4>
               <p className='font-[font1] text-base lg:text-lg leading-relaxed text-gray-600'>
-                Authenticité, créativité et excellence dans chaque projet que nous entreprenons.
+              We stay true to what’s real. We create with heart and imagination. And we give our very best, every single time.
               </p>
             </div>
           </div>

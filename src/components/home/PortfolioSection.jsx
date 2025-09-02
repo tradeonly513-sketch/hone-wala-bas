@@ -37,7 +37,8 @@ const PortfolioSection = () => {
             Our Portfolio
           </h2>
           <p className='portfolio-cta font-[font1] lg:text-xl text-lg lg:max-w-3xl max-w-xl mx-auto leading-relaxed text-gray-700 mb-12'>
-            Découvrez notre travail exceptionnel et laissez-vous inspirer par notre approche unique de la vidéographie de mariage.
+        
+          Every wedding is unique. Here’s a glimpse of how we bring each story to life.
           </p>
           
           <div className='portfolio-cta inline-flex items-center'>

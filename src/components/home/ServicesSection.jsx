@@ -86,7 +86,7 @@ const ServicesSection = () => {
             Services
           </h2>
           <p className='font-[font1] lg:text-xl text-lg lg:max-w-3xl max-w-xl mx-auto leading-relaxed text-gray-700'>
-            Des services complets pour immortaliser votre mariage avec l'excellence que vous méritez.
+            Everything you need to relive your wedding. beautifully filmed, thoughtfully crafted, and made just for you.
           </p>
         </div>
 
