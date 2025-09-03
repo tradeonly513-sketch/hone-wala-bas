@@ -75,7 +75,7 @@ const Footer = () => {
                   }}
                   className='font-[font1] text-base lg:text-lg text-gray-300 hover:text-[#D3FD50] transition-colors duration-300 hover:underline text-left'
                 >
-                  Our Portfolio0
+                  Our Portfolio
                 </button>
               </li>
               <li>

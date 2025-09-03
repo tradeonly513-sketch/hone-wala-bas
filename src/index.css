@@ -86,31 +86,6 @@ nav {
     display: none;
 }
 
-/* Smooth horizontal scrolling for video showcase */
-.video-showcase-grid .flex {
-    scroll-behavior: smooth;
-    -webkit-overflow-scrolling: touch;
-}
-
-/* Custom scrollbar for video showcase */
-.video-showcase-grid .flex::-webkit-scrollbar {
-    height: 6px;
-}
-
-.video-showcase-grid .flex::-webkit-scrollbar-track {
-    background: #f1f1f1;
-    border-radius: 3px;
-}
-
-.video-showcase-grid .flex::-webkit-scrollbar-thumb {
-    background: #D3FD50;
-    border-radius: 3px;
-}
-
-.video-showcase-grid .flex::-webkit-scrollbar-thumb:hover {
-    background: #b8e03e;
-}
-
 /* Prevent content jumping during animations */
 .gsap-animation {
     will-change: transform, opacity;
