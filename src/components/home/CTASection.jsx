@@ -1,66 +1,51 @@
-import React, { useRef, useEffect, useState } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/all'
 import { Link } from 'react-router-dom'
 
 const CTASection = () => {
   const sectionRef = useRef(null)
-  const [isVisible, setIsVisible] = useState(false)
 
-  // Use Intersection Observer for more reliable triggering
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting && !isVisible) {
-          setIsVisible(true)
-        }
-      },
-      { 
-        threshold: 0.1, // Trigger when 10% visible
-        rootMargin: '50px' // Start 50px before entering viewport
-      }
-    )
+  gsap.registerPlugin(ScrollTrigger)
 
-    if (sectionRef.current) {
-      observer.observe(sectionRef.current)
-    }
-
-    return () => {
-      if (sectionRef.current) {
-        observer.unobserve(sectionRef.current)
-      }
-    }
-  }, [isVisible])
-
-  // Animate when visible
   useGSAP(() => {
-    if (!isVisible) return
-
     const ctx = gsap.context(() => {
       const elements = gsap.utils.toArray('.cta-fade')
-      
-      // Immediate animation without ScrollTrigger
+
+      // Timeline for staggered animations
       gsap.fromTo(
         elements,
-        { 
-          opacity: 0, 
-          y: 40,
-          visibility: 'hidden'
-        },
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
-          visibility: 'visible',
           duration: 0.8,
           ease: 'power2.out',
-          stagger: 0.15,
-          delay: 0.1 // Small delay for smoothness
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            toggleActions: 'play none none none',
+          },
         }
       )
     }, sectionRef)
 
+    // ✅ Force recalculation after mount
+    ScrollTrigger.refresh()
+
     return () => ctx.revert()
-  }, [isVisible]) // Re-run when visibility changes
+  }, [])
+
+  // ✅ Extra fallback: ensure triggers recalc when window resizes
+  useEffect(() => {
+    const handleResize = () => {
+      ScrollTrigger.refresh()
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
+  }, [])
 
   return (
     <section
@@ -70,15 +55,15 @@ const CTASection = () => {
     >
       <div className="container mx-auto lg:px-12 px-6 text-center">
         <div className="max-w-4xl mx-auto">
-          <h2 className="cta-fade font-[font2] lg:text-[8vw] text-6xl uppercase mb-8 leading-tight" style={{ opacity: 0 }}>
+          <h2 className="cta-fade font-[font2] lg:text-[8vw] text-6xl uppercase mb-8 leading-tight">
             Ready to Create Magic?
           </h2>
 
-          <p className="cta-fade font-[font1] lg:text-2xl text-xl leading-relaxed text-gray-300 mb-12 lg:max-w-3xl max-w-xl mx-auto" style={{ opacity: 0 }}>
+          <p className="cta-fade font-[font1] lg:text-2xl text-xl leading-relaxed text-gray-300 mb-12 lg:max-w-3xl max-w-xl mx-auto">
             Transformons votre jour spécial en un chef-d'œuvre cinématographique qui raconte votre histoire unique.
           </p>
 
-          <div className="cta-fade space-y-6 lg:space-y-0 lg:space-x-6 lg:flex lg:justify-center lg:items-center" style={{ opacity: 0 }}>
+          <div className="cta-fade space-y-6 lg:space-y-0 lg:space-x-6 lg:flex lg:justify-center lg:items-center">
             <Link
               to="/contact"
               className="lg:border-3 border-2 hover:border-[#D3FD50] hover:bg-[#D3FD50] hover:text-black lg:h-20 h-16 flex items-center justify-center px-12 lg:px-16 border-white rounded-full uppercase transition-all duration-300 cursor-pointer group inline-flex"
@@ -98,7 +83,7 @@ const CTASection = () => {
             </Link>
           </div>
 
-          <div className="cta-fade mt-16 grid lg:grid-cols-3 grid-cols-1 gap-8 text-center" style={{ opacity: 0 }}>
+          <div className="cta-fade mt-16 grid lg:grid-cols-3 grid-cols-1 gap-8 text-center">
             <div className="space-y-2">
               <div className="text-3xl lg:text-4xl font-[font2] text-[#D3FD50]">24h</div>
               <div className="font-[font1] text-sm lg:text-base text-gray-400 uppercase tracking-wide">
