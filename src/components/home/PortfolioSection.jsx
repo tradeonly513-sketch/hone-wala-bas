@@ -1,10 +1,8 @@
-import React, { useRef } from 'react'
-import { useGSAP } from '@gsap/react'
+import React, { useRef, useEffect } from 'react'
 import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/all'
 import { Link } from 'react-router-dom'
 
-// 🔹 Import same video lists as in Projects page
+// 🔹 Video data (same as your Projects page)
 const teasers = [
   { videoId: 'dQw4w9WgXcQ' },
   { videoId: 'jNQXAC9IVRw' },
@@ -43,62 +41,37 @@ const highlights = [
 ]
 
 const PortfolioSection = () => {
-  const sectionRef = useRef(null)
-  gsap.registerPlugin(ScrollTrigger)
+  const trackRef = useRef(null)
+  const allVideos = [...teasers, ...highlights]
 
-  const allVideos = [...teasers, ...highlights] // merge both lists
-
-  useGSAP(() => {
-    // Fade/slide in section
-    gsap.fromTo('.portfolio-showcase',
-      { opacity: 0, y: 50 },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.portfolio-showcase',
-          start: 'top 80%',
-          toggleActions: 'play none none none'
-        }
-      }
-    )
-
-    // Slide videos from left → right
-    gsap.fromTo('.video-card',
-      { opacity: 0, x: -100, scale: 0.9 },
-      {
-        opacity: 1,
-        x: 0,
-        scale: 1,
-        duration: 0.7,
-        ease: 'power3.out',
-        stagger: { amount: 0.6 },
-        scrollTrigger: {
-          trigger: '.video-showcase-grid',
-          start: 'top 75%',
-          toggleActions: 'play none none none'
-        }
-      }
-    )
-  })
+  useEffect(() => {
+    // Infinite marquee scroll effect
+    gsap.to(trackRef.current, {
+      xPercent: -50, // move half its width
+      repeat: -1,
+      duration: 40, // adjust speed
+      ease: "linear"
+    })
+  }, [])
 
   return (
     <section
       id="portfolio"
-      ref={sectionRef}
-      className="min-h-screen bg-gray-50 text-black relative z-30"
+      className="min-h-screen bg-gray-50 text-black relative z-30 overflow-hidden"
     >
       <div className="container mx-auto lg:px-12 px-6 lg:py-24 py-16">
-        <div className="portfolio-showcase">
-          {/* Video Showcase */}
-          <div className="video-showcase-grid mb-16">
-            <div className="flex gap-6 lg:gap-8 overflow-x-auto scrollbar-hide pb-4">
-              {allVideos.map((video, index) => (
+        <div className="portfolio-showcase space-y-16">
+          
+          {/* Moving Video Track */}
+          <div className="relative w-full overflow-hidden">
+            <div
+              ref={trackRef}
+              className="flex gap-6 lg:gap-8 w-[200%]" // doubled width for seamless loop
+            >
+              {[...allVideos, ...allVideos].map((video, index) => (
                 <div 
                   key={index}
-                  className="video-card group flex-shrink-0 w-80 lg:w-96 rounded-2xl overflow-hidden transition-all duration-500 hover:scale-105 relative"
+                  className="video-card flex-shrink-0 w-80 lg:w-96 rounded-2xl overflow-hidden relative"
                 >
                   <div className="relative aspect-video bg-black rounded-2xl overflow-hidden">
                     <iframe
@@ -110,13 +83,12 @@ const PortfolioSection = () => {
                       allowFullScreen
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/40 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none" />
                   </div>
                 </div>
               ))}
             </div>
           </div>
-          
+
           {/* Portfolio Button */}
           <div className="text-center">
             <Link 
