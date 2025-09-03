@@ -9,56 +9,61 @@ const ContactSection = () => {
   gsap.registerPlugin(ScrollTrigger);
 
   useGSAP(() => {
-    gsap.fromTo(
-      '.contact-title',
-      {
-        opacity: 0,
-        y: 50,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 1,
-        ease: 'power2.out',
-        scrollTrigger: {
-          trigger: '.contact-title',
-          start: 'top 80%',
-          toggleActions: 'play none none none',
-        },
-      }
-    );
+    const ctx = gsap.context(() => {
+      // Title animation
+      gsap.fromTo(
+        '.contact-title',
+        { opacity: 0, y: 50 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 1,
+          ease: 'power2.out',
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 95%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
 
-    gsap.fromTo(
-      '.contact-info',
-      {
-        opacity: 0,
-        y: 30,
-      },
-      {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        stagger: {
-          amount: 0.3,
-        },
-        scrollTrigger: {
-          trigger: '.contact-grid',
-          start: 'top 75%',
-          toggleActions: 'play none none none',
-        },
+      // Info blocks animation
+      gsap.fromTo(
+        '.contact-info',
+        { opacity: 0, y: 30 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 90%',
+            toggleActions: 'play none none none',
+          },
+        }
+      );
+
+      // ✅ fallback if already visible (desktop on load)
+      if (sectionRef.current.getBoundingClientRect().top < window.innerHeight) {
+        gsap.to('.contact-title, .contact-info', {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          stagger: 0.2,
+          overwrite: true,
+        });
       }
-    );
-  });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
 
   const socialLinks = [
     { name: 'Instagram', url: 'https://instagram.com/s111khar', icon: '📷' },
     { name: 'Facebook', url: 'https://facebook.com/k72wedding', icon: '📘' },
-    {
-      name: 'LinkedIn',
-      url: 'https://linkedin.com/company/k72wedding',
-      icon: '💼',
-    },
+    { name: 'LinkedIn', url: 'https://linkedin.com/company/k72wedding', icon: '💼' },
   ];
 
   return (
@@ -73,7 +78,7 @@ const ContactSection = () => {
             Get In Touch
           </h2>
           <p className="font-[font1] lg:text-xl text-lg lg:max-w-3xl max-w-xl mx-auto leading-relaxed text-gray-300">
-          The first step to your perfect film is a simple hello. Reach out to us today :)
+            The first step to your perfect film is a simple hello. Reach out to us today :)
           </p>
         </div>
 
@@ -118,7 +123,7 @@ const ContactSection = () => {
                   Quick Response Guarantee
                 </h4>
                 <p className="font-[font1] text-base lg:text-lg text-gray-300 leading-relaxed">
-                We respond to all inquiries within 24 hours. Your project deserves our immediate attention.
+                  We respond to all inquiries within 24 hours. Your project deserves our immediate attention.
                 </p>
               </div>
             </div>
