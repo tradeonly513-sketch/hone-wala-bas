@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useLayoutEffect } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
@@ -7,44 +7,92 @@ import { Link } from 'react-router-dom'
 const CTASection = () => {
   const sectionRef = useRef(null)
 
+  // Register plugin outside of useGSAP
   gsap.registerPlugin(ScrollTrigger)
 
-  useGSAP(() => {
-    const ctx = gsap.context(() => {
-      const elements = gsap.utils.toArray('.cta-fade')
-
-      // Timeline for staggered animations
-      gsap.fromTo(
-        elements,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power2.out',
-          stagger: 0.2,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top bottom',
-            toggleActions: 'play none none none',
-          },
-        }
-      )
-    }, sectionRef)
-
-    // ✅ Force recalculation after mount
+  // Use useLayoutEffect to ensure DOM is painted before animations
+  useLayoutEffect(() => {
+    // Force ScrollTrigger to recalculate all positions
     ScrollTrigger.refresh()
-
-    return () => ctx.revert()
   }, [])
 
-  // ✅ Extra fallback: ensure triggers recalc when window resizes
-  useEffect(() => {
-    const handleResize = () => {
-      ScrollTrigger.refresh()
-    }
+  useGSAP(() => {
+    // Small delay to ensure everything is loaded
+    const timer = setTimeout(() => {
+      const ctx = gsap.context(() => {
+        const elements = gsap.utils.toArray('.cta-fade')
+        
+        // Check if elements exist
+        if (!elements.length) return
+
+        // Create timeline with ScrollTrigger
+        const tl = gsap.timeline({
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 90%',  // Trigger earlier
+            end: 'bottom 20%',
+            toggleActions: 'play none none reverse',
+            // Force refresh on creation
+            onRefresh: () => ScrollTrigger.refresh(),
+            // Add markers for debugging (remove in production)
+            // markers: true,
+          },
+        })
+
+        tl.fromTo(
+          elements,
+          { 
+            opacity: 0, 
+            y: 40,
+            visibility: 'hidden' // Prevent flash
+          },
+          {
+            opacity: 1,
+            y: 0,
+            visibility: 'visible',
+            duration: 0.8,
+            ease: 'power2.out',
+            stagger: 0.15,
+            clearProps: 'all' // Clean up inline styles after animation
+          }
+        )
+
+        // Check if section is already in viewport on load
+        const rect = sectionRef.current.getBoundingClientRect()
+        if (rect.top < window.innerHeight && rect.bottom > 0) {
+          // If visible, play animation immediately
+          tl.progress(1)
+        }
+
+        // Refresh ScrollTrigger after fonts load
+        document.fonts.ready.then(() => {
+          ScrollTrigger.refresh()
+        })
+
+      }, sectionRef)
+
+      return () => {
+        ctx.revert()
+        clearTimeout(timer)
+      }
+    }, 100) // 100ms delay
+
+    return () => clearTimeout(timer)
+  }, [])
+
+  // Additional refresh on window load
+  useLayoutEffect(() => {
+    const handleLoad = () => ScrollTrigger.refresh()
+    window.addEventListener('load', handleLoad)
+    
+    // Also refresh on resize
+    const handleResize = () => ScrollTrigger.refresh()
     window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+    
+    return () => {
+      window.removeEventListener('load', handleLoad)
+      window.removeEventListener('resize', handleResize)
+    }
   }, [])
 
   return (
