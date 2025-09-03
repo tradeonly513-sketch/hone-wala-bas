@@ -1,6 +1,11 @@
-import { Route, Routes, useLocation } from 'react-router-dom'
-import { Suspense, lazy } from 'react'
+import { Route, Routes } from 'react-router-dom'
+import { Suspense, lazy, useEffect } from 'react'
 import LoadingFallback from './components/common/LoadingFallback'
+import gsap from 'gsap'
+import { ScrollTrigger } from 'gsap/all'
+
+// Register GSAP plugin once
+gsap.registerPlugin(ScrollTrigger)
 
 // Lazy load pages for better performance
 const Home = lazy(() => import('./pages/Home'))
@@ -10,8 +15,20 @@ const PrivacyPolicy = lazy(() => import('./pages/PrivacyPolicy'))
 const TermsOfService = lazy(() => import('./pages/TermsOfService'))
 const AffiliateProgram = lazy(() => import('./pages/AffiliateProgram'))
 
-
 const App = () => {
+  useEffect(() => {
+    // ✅ Refresh ScrollTrigger after full page load
+    const handleLoad = () => {
+      setTimeout(() => ScrollTrigger.refresh(), 200)
+    }
+
+    window.addEventListener('load', handleLoad)
+
+    return () => {
+      window.removeEventListener('load', handleLoad)
+    }
+  }, [])
+
   return (
     <div className='overflow-x-hidden'>
       <Suspense fallback={<LoadingFallback />}>
