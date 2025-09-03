@@ -1,44 +1,52 @@
-import React, { useRef } from 'react'
+import React, { useRef, useEffect } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
 import { Link } from 'react-router-dom'
 
-gsap.registerPlugin(ScrollTrigger)
-
 const CTASection = () => {
   const sectionRef = useRef(null)
+  gsap.registerPlugin(ScrollTrigger)
 
   useGSAP(() => {
     const ctx = gsap.context(() => {
       const elements = gsap.utils.toArray('.cta-fade')
 
-      // Timeline for staggered animations
-      gsap.fromTo(
-        elements,
-        { opacity: 0, y: 40 },
-        {
-          opacity: 1,
-          y: 0,
-          duration: 0.8,
-          ease: 'power2.out',
-          stagger: 0.2,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 90%', // trigger earlier
-            toggleActions: 'play none none none',
-            once: true, // ✅ only fire once
-          },
-        }
-      )
+      // Start hidden (but only via GSAP, not CSS, so we can override)
+      gsap.set(elements, { opacity: 0, y: 40 })
 
-      // ✅ Fallback: instantly show if already in view on page load
+      // Timeline animation
+      gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top 90%',
+          toggleActions: 'play none none none',
+          onEnter: () => console.log('CTA entered!'),
+        }
+      }).to(elements, {
+        opacity: 1,
+        y: 0,
+        duration: 0.8,
+        ease: 'power2.out',
+        stagger: 0.2
+      })
+
+      // ✅ Hard fallback — if in view already, show instantly
       if (sectionRef.current.getBoundingClientRect().top < window.innerHeight) {
         gsap.set(elements, { opacity: 1, y: 0 })
       }
     }, sectionRef)
 
     return () => ctx.revert()
+  }, [])
+
+  // ✅ Extra fallback: ensure visible after mount
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      const elements = sectionRef.current?.querySelectorAll('.cta-fade')
+      if (elements) gsap.set(elements, { opacity: 1, y: 0 })
+    }, 1500) // 1.5s after mount, guarantee visible
+    return () => clearTimeout(timer)
   }, [])
 
   return (
