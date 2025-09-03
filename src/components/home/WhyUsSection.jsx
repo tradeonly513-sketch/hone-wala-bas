@@ -156,7 +156,7 @@ const WhyUsSection = () => {
               className="lg:border-3 border-2 hover:border-[#D3FD50] hover:text-[#D3FD50] hover:bg-[#D3FD50] hover:text-black lg:h-16 h-12 flex items-center px-6 lg:px-8 border-black rounded-full uppercase transition-all duration-300 cursor-pointer group"
             >
               <span className="font-[font2] text-lg lg:text-xl group-hover:scale-105 transition-transform duration-300">
-                Our Portfolio
+                Our Portfolioi
               </span>
             </Link>
           </div>
