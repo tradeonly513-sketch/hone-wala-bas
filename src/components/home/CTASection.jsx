@@ -6,47 +6,45 @@ import { Link } from 'react-router-dom'
 
 const CTASection = () => {
   const sectionRef = useRef(null)
+
   gsap.registerPlugin(ScrollTrigger)
 
   useGSAP(() => {
     const ctx = gsap.context(() => {
       const elements = gsap.utils.toArray('.cta-fade')
 
-      // Start hidden (but only via GSAP, not CSS, so we can override)
-      gsap.set(elements, { opacity: 0, y: 40 })
-
-      // Timeline animation
-      gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top 90%',
-          toggleActions: 'play none none none',
-          onEnter: () => console.log('CTA entered!'),
+      // Timeline for staggered animations
+      gsap.fromTo(
+        elements,
+        { opacity: 0, y: 40 },
+        {
+          opacity: 1,
+          y: 0,
+          duration: 0.8,
+          ease: 'power2.out',
+          stagger: 0.2,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top bottom',
+            toggleActions: 'play none none none',
+          },
         }
-      }).to(elements, {
-        opacity: 1,
-        y: 0,
-        duration: 0.8,
-        ease: 'power2.out',
-        stagger: 0.2
-      })
-
-      // ✅ Hard fallback — if in view already, show instantly
-      if (sectionRef.current.getBoundingClientRect().top < window.innerHeight) {
-        gsap.set(elements, { opacity: 1, y: 0 })
-      }
+      )
     }, sectionRef)
+
+    // ✅ Force recalculation after mount
+    ScrollTrigger.refresh()
 
     return () => ctx.revert()
   }, [])
 
-  // ✅ Extra fallback: ensure visible after mount
+  // ✅ Extra fallback: ensure triggers recalc when window resizes
   useEffect(() => {
-    const timer = setTimeout(() => {
-      const elements = sectionRef.current?.querySelectorAll('.cta-fade')
-      if (elements) gsap.set(elements, { opacity: 1, y: 0 })
-    }, 1500) // 1.5s after mount, guarantee visible
-    return () => clearTimeout(timer)
+    const handleResize = () => {
+      ScrollTrigger.refresh()
+    }
+    window.addEventListener('resize', handleResize)
+    return () => window.removeEventListener('resize', handleResize)
   }, [])
 
   return (
