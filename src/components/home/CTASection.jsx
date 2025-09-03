@@ -1,4 +1,4 @@
-import React, { useRef, useEffect } from 'react'
+import React, { useRef, useLayoutEffect } from 'react'
 import { useGSAP } from '@gsap/react'
 import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
@@ -12,39 +12,48 @@ const CTASection = () => {
   useGSAP(() => {
     const ctx = gsap.context(() => {
       const elements = gsap.utils.toArray('.cta-fade')
+      if (!elements.length) return
 
-      // Timeline for staggered animations
       gsap.fromTo(
         elements,
-        { opacity: 0, y: 40 },
+        { opacity: 0, y: 40, visibility: 'hidden' },
         {
           opacity: 1,
           y: 0,
+          visibility: 'visible',
           duration: 0.8,
           ease: 'power2.out',
           stagger: 0.2,
           scrollTrigger: {
             trigger: sectionRef.current,
-            start: 'top bottom',
+            start: 'top 85%',
             toggleActions: 'play none none none',
           },
         }
       )
     }, sectionRef)
 
-    // ✅ Force recalculation after mount
-    ScrollTrigger.refresh()
-
     return () => ctx.revert()
   }, [])
 
-  // ✅ Extra fallback: ensure triggers recalc when window resizes
-  useEffect(() => {
-    const handleResize = () => {
-      ScrollTrigger.refresh()
+  // ✅ Trigger a safe refresh after mount + when window changes
+  useLayoutEffect(() => {
+    const refresh = () => {
+      requestAnimationFrame(() => {
+        ScrollTrigger.refresh()
+      })
     }
-    window.addEventListener('resize', handleResize)
-    return () => window.removeEventListener('resize', handleResize)
+
+    window.addEventListener('load', refresh)
+    window.addEventListener('resize', refresh)
+
+    // Do one refresh on mount
+    refresh()
+
+    return () => {
+      window.removeEventListener('load', refresh)
+      window.removeEventListener('resize', refresh)
+    }
   }, [])
 
   return (
