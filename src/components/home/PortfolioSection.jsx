@@ -91,10 +91,10 @@ const PortfolioSection = () => {
               {featuredVideos.map((video, index) => (
                 <div 
                   key={index}
-                  className='video-card group flex-shrink-0 w-80 lg:w-96 bg-white rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl transition-all duration-500 hover:scale-105'
+                  className='video-card group flex-shrink-0 w-80 lg:w-96 rounded-2xl overflow-hidden transition-all duration-500 hover:scale-105'
                 >
                   {/* Video Container */}
-                  <div className='relative aspect-video bg-black rounded-t-2xl overflow-hidden'>
+                  <div className='relative aspect-video bg-black rounded-2xl overflow-hidden'>
                     <iframe
                       className='absolute top-0 left-0 w-full h-full'
                       src={`https://www.youtube.com/embed/${video.videoId}?autoplay=0&mute=1&controls=1&modestbranding=1&rel=0&showinfo=0`}
@@ -110,17 +110,15 @@ const PortfolioSection = () => {
                   </div>
                   
                   {/* Video Info */}
-                  <div className='p-6 space-y-2'>
+                  <div className='absolute bottom-0 left-0 right-0 p-6 space-y-2 bg-gradient-to-t from-black/80 via-black/40 to-transparent'>
                     <h3 className='font-[font2] text-xl lg:text-2xl uppercase text-black group-hover:text-[#D3FD50] transition-colors duration-300'>
+                    <h3 className='font-[font2] text-xl lg:text-2xl uppercase text-white group-hover:text-[#D3FD50] transition-colors duration-300'>
                       {video.title}
                     </h3>
-                    <p className='font-[font1] text-base lg:text-lg text-gray-600'>
+                    <p className='font-[font1] text-base lg:text-lg text-gray-300'>
                       {video.subtitle}
                     </p>
                   </div>
-
-                  {/* Hover accent line */}
-                  <div className='w-0 group-hover:w-full h-1 bg-[#D3FD50] transition-all duration-500 rounded-full'></div>
                 </div>
               ))}
             </div>
@@ -139,6 +137,9 @@ const PortfolioSection = () => {
           </div>
         </div>
       </div>
+    )
+    )
+    }
     </section>
   )
 }
