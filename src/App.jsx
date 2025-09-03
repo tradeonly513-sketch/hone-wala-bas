@@ -17,15 +17,20 @@ const AffiliateProgram = lazy(() => import('./pages/AffiliateProgram'))
 
 const App = () => {
   useEffect(() => {
-    // ✅ Refresh ScrollTrigger after full page load
+    // ✅ Refresh ScrollTrigger on load
     const handleLoad = () => {
-      setTimeout(() => ScrollTrigger.refresh(), 200)
+      ScrollTrigger.refresh()
     }
-
     window.addEventListener('load', handleLoad)
+
+    // ✅ Also refresh after React paints (fixes desktop bug)
+    const raf = requestAnimationFrame(() => {
+      ScrollTrigger.refresh()
+    })
 
     return () => {
       window.removeEventListener('load', handleLoad)
+      cancelAnimationFrame(raf)
     }
   }, [])
 
