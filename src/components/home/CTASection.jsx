@@ -4,25 +4,17 @@ import gsap from 'gsap'
 import { ScrollTrigger } from 'gsap/all'
 import { Link } from 'react-router-dom'
 
+gsap.registerPlugin(ScrollTrigger)
+
 const CTASection = () => {
   const sectionRef = useRef(null)
-
-  gsap.registerPlugin(ScrollTrigger)
 
   useGSAP(() => {
     const ctx = gsap.context(() => {
       const elements = gsap.utils.toArray('.cta-fade')
 
       // Timeline for staggered animations
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: 'top bottom',   // fire as soon as section enters screen
-          toggleActions: 'play none none none',
-        },
-      })
-
-      tl.fromTo(
+      gsap.fromTo(
         elements,
         { opacity: 0, y: 40 },
         {
@@ -31,10 +23,16 @@ const CTASection = () => {
           duration: 0.8,
           ease: 'power2.out',
           stagger: 0.2,
+          scrollTrigger: {
+            trigger: sectionRef.current,
+            start: 'top 90%', // trigger earlier
+            toggleActions: 'play none none none',
+            once: true, // ✅ only fire once
+          },
         }
       )
 
-      // ✅ Fallback: if section already in view on load
+      // ✅ Fallback: instantly show if already in view on page load
       if (sectionRef.current.getBoundingClientRect().top < window.innerHeight) {
         gsap.set(elements, { opacity: 1, y: 0 })
       }
