@@ -147,20 +147,6 @@ const WhyUsSection = () => {
             </div>
           ))}
         </div>
-
-        {/* Call to Action */}
-        <div className="text-center mt-20">
-          <div className="inline-flex items-center gap-4">
-            <Link
-              to="/projects"
-              className="lg:border-3 border-2 hover:border-[#D3FD50] hover:text-[#D3FD50] hover:bg-[#D3FD50] hover:text-black lg:h-16 h-12 flex items-center px-6 lg:px-8 border-black rounded-full uppercase transition-all duration-300 cursor-pointer group"
-            >
-              <span className="font-[font2] text-lg lg:text-xl group-hover:scale-105 transition-transform duration-300">
-                Our Portfolioi
-              </span>
-            </Link>
-          </div>
-        </div>
       </div>
     </section>
   );
