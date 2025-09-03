@@ -11,28 +11,32 @@ const CTASection = () => {
 
   useGSAP(() => {
     const ctx = gsap.context(() => {
-      // Animate all fade elements
-      gsap.fromTo(
-        '.cta-fade',
-        { opacity: 0, y: 30 },
+      const elements = gsap.utils.toArray('.cta-fade')
+
+      // Timeline for staggered animations
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: 'top bottom',   // fire as soon as section enters screen
+          toggleActions: 'play none none none',
+        },
+      })
+
+      tl.fromTo(
+        elements,
+        { opacity: 0, y: 40 },
         {
           opacity: 1,
           y: 0,
           duration: 0.8,
           ease: 'power2.out',
           stagger: 0.2,
-          scrollTrigger: {
-            trigger: sectionRef.current,
-            start: 'top 95%',   // fire earlier, works on desktop
-            end: 'bottom 10%',
-            toggleActions: 'play none none none',
-          },
         }
       )
 
-      // ✅ fallback: force play if no scroll trigger ever fires
-      if (window.innerHeight >= sectionRef.current.offsetHeight) {
-        gsap.to('.cta-fade', { opacity: 1, y: 0, duration: 0.8, stagger: 0.2 })
+      // ✅ Fallback: if section already in view on load
+      if (sectionRef.current.getBoundingClientRect().top < window.innerHeight) {
+        gsap.set(elements, { opacity: 1, y: 0 })
       }
     }, sectionRef)
 
